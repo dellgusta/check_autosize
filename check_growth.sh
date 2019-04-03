@@ -37,12 +37,9 @@ do
 		volsize=`ssh $storage_core vol size $volumes_inuse | awk '{print $8}' | cut -d "." -f1 | cut -d "g" -f1`
 		maxsize=`ssh $storage_core vol status -v $volumes_inuse | grep -i maximum-size | cut -d "=" -f2 | cut -d " " -f1`
 		if [[ $volsize -eq $maxsize ]]; then
-			echo "" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
-			echo "Volume: $volumes_inuse" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
-			echo "Storage: $storage_core" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
-			echo "The maximum size of autogrow settings on volume $volumes_inuse is equal to the volume size:" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
-			echo "	Vol size(in GB): $volsize | Maximum grow size(in GB): $maxsize" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
-			echo "" >> /home/gsilva10/scripts/check_grow/.trash/result.txt
+			echo "Error 1: Autosize: Volume auto size configuration in $volumes_inuse within storage $storage_core has reached it's limit! Please check."
+		else
+			echo 0
 		fi
 	done
 done
